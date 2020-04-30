@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Jokes = require("../models/jokes");
-
+const jokeController = require("../controllers/jokeControll");
 //getting all the jokes!
 router.get("/", async (req, res) => {
   try {
@@ -13,19 +13,11 @@ router.get("/", async (req, res) => {
 });
 
 //posting a new joke to the api
-router.post("/", async (req, res) => {
-  const newJoke = new Jokes({
-    title: req.body.title,
-    content: req.body.content,
-  });
-
-  try {
-    const savedJoke = await newJoke.save();
-    res.json(savedJoke);
-  } catch (err) {
-    req.status(400).json({ Error: err });
-  }
-});
+router.post(
+  "/",
+  jokeController.validate("createJoke"),
+  jokeController.createJoke
+);
 
 //getting by the ID
 router.get("/:jokeId", async (req, res) => {

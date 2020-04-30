@@ -4,11 +4,12 @@ const mongoose = require("mongoose");
 require("dotenv/config");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const expressValidator = require("express-validator");
 
 //middleware
 app.use(cors());
 app.use(bodyParser.json());
-
+app.use(expressValidator());
 //import routes
 const jokesRoute = require("./routes/Joke");
 app.use("/jokes", jokesRoute);
